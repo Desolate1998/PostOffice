@@ -1,26 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ApplicationIcon>Untitled Diagram-Page-2 (1).ico</ApplicationIcon>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>PostOffice</Title>
     <Authors>Ruan de Jongh,</Authors>
-    <PackageIcon>Untitled Diagram-Page-2 (1).png</PackageIcon>
+	<PackageId>CQRS.PostOffice</PackageId>
+	<Version>1.0.0</Version>
+	 <Product>PostOffice</Product>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="Untitled Diagram-Page-2 (1).ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\ruand\Downloads\Untitled Diagram-Page-2 (1).png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
