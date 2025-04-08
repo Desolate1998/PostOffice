@@ -1,7 +1,9 @@
 # Welcome to the post office
 ##Getting started
 
+dotnet add package CQRS.PostOffice --version 1.0.0
  Register the service
+ 
 ``` sharp
 builder.Services.AddPostOffice();
 ```
