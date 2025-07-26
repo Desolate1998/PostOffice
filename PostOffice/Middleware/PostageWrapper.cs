@@ -1,4 +1,6 @@
-﻿namespace PostOffice;
+﻿using PostOffice.Core;
+
+namespace PostOffice.Middleware;
 
 public class PostageWrapper<TMail, TResponse> : IPostageWrapper
     where TMail : IMail<TResponse>

@@ -1,4 +1,4 @@
-﻿namespace PostOffice;
+﻿namespace PostOffice.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class PostageAttribute : Attribute

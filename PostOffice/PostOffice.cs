@@ -1,28 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+// Global using statements for easier consumption
+global using PostOffice.Core;
+global using PostOffice.Configuration;
 
-namespace PostOffice;
-
-public static class PostOffice
+namespace PostOffice
 {
-    public static IServiceCollection AddPostOffice(this IServiceCollection services)
-    {
-        services.AddTransient<Poster>();
-
-        var handlerTypes = AppDomain.CurrentDomain
-            .GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type =>
-                !type.IsAbstract &&
-                type.BaseType != null &&
-                type.BaseType.IsGenericType &&
-                type.BaseType.GetGenericTypeDefinition() == typeof(DeliveryAsync<,>));
-
-        foreach (var handler in handlerTypes)
-        {
-            var baseType = handler.BaseType!;
-            services.AddTransient(baseType, handler);
-        }
-
-        return services;
-    }
-}
+    // This file serves as the main entry point for the PostOffice library
+    // It provides global using statements to make the most commonly used types
+    // available without requiring explicit namespace imports
+} 

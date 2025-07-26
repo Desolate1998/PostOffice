@@ -1,4 +1,4 @@
-﻿namespace PostOffice;
+﻿namespace PostOffice.Core;
 
 public abstract class Delivery<TPackage, TResponse>
 {

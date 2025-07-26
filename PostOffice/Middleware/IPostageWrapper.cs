@@ -1,4 +1,4 @@
-﻿namespace PostOffice;
+﻿namespace PostOffice.Middleware;
 
 public interface IPostageWrapper
 {
