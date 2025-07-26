@@ -7,12 +7,12 @@
     
     <!-- Package Information -->
     <PackageId>CQRS.PostOffice</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.5</Version>
     <Authors>PostOffice Contributors</Authors>
     <Description>A high-performance CQRS message processing library with middleware pipeline, FluentValidation integration, and blazing-fast performance optimizations. Send messages with validation, custom responses, and sub-microsecond latency!</Description>
     <PackageTags>CQRS;MediatR;Messaging;Validation;FluentValidation;Middleware;Performance;PostOffice</PackageTags>
-    <PackageProjectUrl>https://github.com/your-repo/PostOffice</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/your-repo/PostOffice</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Desolate1998/PostOffice</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Desolate1998/PostOffice</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>postoffice-icon.png</PackageIcon>
@@ -21,13 +21,17 @@
     
     <!-- Release Notes -->
     <PackageReleaseNotes>
-PostOffice v1.0.1 - Performance &amp; Polish Update!
+PostOffice v1.0.5 - Improved Documentation
 
 What's New:
-- Bug fixes and performance improvements
-- Enhanced documentation and examples
-- Better error handling and validation
-- Optimized memory usage
+- Completely restructured README for easier understanding
+- Added clear progression from simple handlers to middleware to validation
+- Enhanced examples with step-by-step explanations
+- Added comprehensive middleware documentation with execution order
+- Improved validation examples with both Data Annotations and FluentValidation
+- Added complete end-to-end example showing all features together
+- Better code examples with realistic use cases
+- Clearer explanations of auto-discovery and performance features
 
 Features:
 - High-performance message processing with middleware pipeline
@@ -44,7 +48,7 @@ Performance:
 - 50-80% less memory allocations
 - Zero reflection overhead
 
-Your validator can return "Test" on errors - just like you wanted!
+Professional and enterprise-ready CQRS messaging library with comprehensive documentation.
     </PackageReleaseNotes>
   </PropertyGroup>
 
