@@ -1,5 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using PostOffice.Middleware;
 using PostOffice.Validation;
 
@@ -19,7 +19,7 @@ public class PostOfficeBuilder
     /// </summary>
     public PostOfficeBuilder AddValidation()
     {
-        _services.AddTransient(typeof(IPostageMiddleware<,>), typeof(ValidationBehavior<,>));
+        _services.AddTransient(typeof(IPostageMiddleware<,>), typeof(ValidationMiddleware<,>));
         return this;
     }
 
@@ -69,4 +69,4 @@ public class PostOfficeBuilder
         _services.AddValidatorsFromAssemblyContaining(type);
         return this;
     }
-} 
+}

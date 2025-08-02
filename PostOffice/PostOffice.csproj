@@ -7,7 +7,7 @@
     
     <!-- Package Information -->
     <PackageId>CQRS.PostOffice</PackageId>
-    <Version>1.0.5</Version>
+    <Version>1.1.0</Version>
     <Authors>PostOffice Contributors</Authors>
     <Description>A high-performance CQRS message processing library with middleware pipeline, FluentValidation integration, and blazing-fast performance optimizations. Send messages with validation, custom responses, and sub-microsecond latency!</Description>
     <PackageTags>CQRS;Messaging</PackageTags>
@@ -21,17 +21,15 @@
     
     <!-- Release Notes -->
     <PackageReleaseNotes>
-PostOffice v1.0.5 - Improved Documentation
+PostOffice v1.0.6 - Deployment Guide
 
 What's New:
-- Completely restructured README for easier understanding
-- Added clear progression from simple handlers to middleware to validation
-- Enhanced examples with step-by-step explanations
-- Added comprehensive middleware documentation with execution order
-- Improved validation examples with both Data Annotations and FluentValidation
-- Added complete end-to-end example showing all features together
-- Better code examples with realistic use cases
-- Clearer explanations of auto-discovery and performance features
+- Added comprehensive deployment guide with cute emojis
+- Documented missing features analysis for future development
+- Created step-by-step deployment instructions
+- Added troubleshooting guide for common deployment issues
+- Included automated deployment options (GitHub Actions, PowerShell scripts)
+- Enhanced version management documentation
 
 Features:
 - High-performance message processing with middleware pipeline
@@ -48,7 +46,7 @@ Performance:
 - 50-80% less memory allocations
 - Zero reflection overhead
 
-Professional and enterprise-ready CQRS messaging library with comprehensive documentation.
+Professional and enterprise-ready CQRS messaging library with comprehensive documentation and deployment guides.
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -56,6 +54,7 @@ Professional and enterprise-ready CQRS messaging library with comprehensive docu
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,6 +5,10 @@ using PostOffice.Middleware;
 
 namespace PostOffice.Validation;
 
+/// <summary>
+/// Simple validation middleware that automatically validates requests using FluentValidation
+/// Works exactly like MediatR + FluentValidation - just add validators and they get called automatically
+/// </summary>
 public class ValidationMiddleware<TMail, TResponse> : IPostageMiddleware<TMail, TResponse>
     where TMail : IMail<TResponse>
 {
@@ -17,21 +21,29 @@ public class ValidationMiddleware<TMail, TResponse> : IPostageMiddleware<TMail, 
 
     public async Task<(bool handled, TResponse? result)> StampAsync(TMail mail, Func<TMail, Task<TResponse>> next)
     {
-        // Try to get validator for the mail type
-        var validatorType = typeof(IValidator<>).MakeGenericType(typeof(TMail));
-        var validator = _serviceProvider.GetService(validatorType) as IValidator;
-
-        if (validator != null)
+        // Get all validators for this mail type
+        var validators = _serviceProvider.GetServices<IValidator<TMail>>();
+        
+        if (validators.Any())
         {
-            var validationResult = await validator.ValidateAsync(new ValidationContext<TMail>(mail));
+            // Run all validators
+            var validationTasks = validators.Select(v => v.ValidateAsync(mail));
+            var validationResults = await Task.WhenAll(validationTasks);
             
-            if (!validationResult.IsValid)
+            // Collect all validation failures
+            var failures = validationResults
+                .SelectMany(r => r.Errors)
+                .Where(f => f != null)
+                .ToList();
+
+            if (failures.Count > 0)
             {
-                throw new ValidationException(validationResult.Errors);
+                // Validation failed - throw exception
+                throw new ValidationException(failures);
             }
         }
 
-        // Continue to next middleware or handler
+        // Validation passed (or no validators found) - continue to next middleware
         return (false, default(TResponse));
     }
 } 
