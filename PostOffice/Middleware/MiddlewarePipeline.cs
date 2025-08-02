@@ -2,17 +2,15 @@ using PostOffice.Core;
 
 namespace PostOffice.Middleware;
 
-public class MiddlewarePipeline<TMail, TResponse> : IMiddlewarePipeline<TMail, TResponse>
+/// <summary>
+/// Default implementation of the middleware pipeline
+/// </summary>
+public class MiddlewarePipeline<TMail, TResponse>(IEnumerable<IPostageMiddleware<TMail, TResponse>> middleware) : IMiddlewarePipeline<TMail, TResponse>
     where TMail : IMail<TResponse>
 {
-    private readonly IEnumerable<IPostageMiddleware<TMail, TResponse>> _middleware;
+    private readonly IEnumerable<IPostageMiddleware<TMail, TResponse>> _middleware = middleware;
 
-    public MiddlewarePipeline(IEnumerable<IPostageMiddleware<TMail, TResponse>> middleware)
-    {
-        _middleware = middleware;
-    }
-
-    public async Task<TResponse> ExecuteAsync(TMail mail, Func<TMail, Task<TResponse>> finalHandler)
+  public async Task<TResponse> ExecuteAsync(TMail mail, Func<TMail, Task<TResponse>> finalHandler)
     {
         var middlewareArray = _middleware.ToArray();
         
@@ -21,7 +19,6 @@ public class MiddlewarePipeline<TMail, TResponse> : IMiddlewarePipeline<TMail, T
             return await finalHandler(mail);
         }
         
-        // Build the pipeline from right to left (last middleware first)
         Func<TMail, Task<TResponse>> pipeline = finalHandler;
         
         for (int i = middlewareArray.Length - 1; i >= 0; i--)
@@ -36,7 +33,6 @@ public class MiddlewarePipeline<TMail, TResponse> : IMiddlewarePipeline<TMail, T
                 {
                     return result!;
                 }
-                // If not handled, continue to next in pipeline
                 return await nextPipeline(mail);
             };
         }

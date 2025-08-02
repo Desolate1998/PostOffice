@@ -10,7 +10,7 @@ namespace PostOffice.Configuration;
 public static class PerformanceExtensions
 {
     /// <summary>
-    /// Adds performance logging that tracks request timing
+    /// Adds performance logging middleware
     /// </summary>
     public static PostOfficeBuilder AddPerformanceLogging(this PostOfficeBuilder builder)
     {
@@ -19,7 +19,7 @@ public static class PerformanceExtensions
     }
 
     /// <summary>
-    /// Adds validation performance logging
+    /// Adds validation performance logging middleware
     /// </summary>
     public static PostOfficeBuilder AddValidationPerformanceLogging(this PostOfficeBuilder builder)
     {

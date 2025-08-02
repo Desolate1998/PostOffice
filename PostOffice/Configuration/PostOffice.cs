@@ -3,14 +3,17 @@ using PostOffice.Middleware;
 
 namespace PostOffice.Configuration;
 
+/// <summary>
+/// Configuration extensions for PostOffice
+/// </summary>
 public static class PostOffice
 {
+    /// <summary>
+    /// Adds PostOffice services to the service collection
+    /// </summary>
     public static PostOfficeBuilder AddPostOffice(this IServiceCollection services)
     {
-        // Register the standard Poster
         services.AddTransient<Poster>();
-
-        // Register middleware pipeline
         services.AddTransient(typeof(IMiddlewarePipeline<,>), typeof(MiddlewarePipeline<,>));
 
         return new PostOfficeBuilder(services);

@@ -3,21 +3,15 @@ using Microsoft.Extensions.Logging;
 namespace PostOffice.Middleware;
 
 /// <summary>
-/// Simple performance logging middleware that tracks request timing
+/// Performance logging middleware
 /// </summary>
-public class PerformanceLoggingMiddleware<TMail, TResponse> : IPostageMiddleware<TMail, TResponse>
+public class PerformanceLoggingMiddleware<TMail, TResponse>(ILogger<PerformanceLoggingMiddleware<TMail, TResponse>> logger) : IPostageMiddleware<TMail, TResponse>
     where TMail : IMail<TResponse>
 {
-    private readonly ILogger<PerformanceLoggingMiddleware<TMail, TResponse>> _logger;
-    private readonly string _mailTypeName;
+    private readonly ILogger<PerformanceLoggingMiddleware<TMail, TResponse>> _logger = logger;
+    private readonly string _mailTypeName = typeof(TMail).Name;
 
-    public PerformanceLoggingMiddleware(ILogger<PerformanceLoggingMiddleware<TMail, TResponse>> logger)
-    {
-        _logger = logger;
-        _mailTypeName = typeof(TMail).Name;
-    }
-
-    public async Task<(bool handled, TResponse? result)> StampAsync(TMail mail, Func<TMail, Task<TResponse>> next)
+  public async Task<(bool handled, TResponse? result)> StampAsync(TMail mail, Func<TMail, Task<TResponse>> next)
     {
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         var startTime = DateTime.UtcNow;

@@ -5,19 +5,17 @@ using PostOffice.Validation;
 
 namespace PostOffice.Configuration;
 
-public class PostOfficeBuilder
+/// <summary>
+/// Builder for configuring PostOffice services
+/// </summary>
+public class PostOfficeBuilder(IServiceCollection services)
 {
-    internal readonly IServiceCollection _services;
+    internal readonly IServiceCollection _services = services;
 
-    public PostOfficeBuilder(IServiceCollection services)
-    {
-        _services = services;
-    }
-
-    /// <summary>
-    /// Adds FluentValidation middleware (throws exceptions on validation failure)
-    /// </summary>
-    public PostOfficeBuilder AddValidation()
+  /// <summary>
+  /// Adds FluentValidation middleware
+  /// </summary>
+  public PostOfficeBuilder AddValidation()
     {
         _services.AddTransient(typeof(IPostageMiddleware<,>), typeof(ValidationMiddleware<,>));
         return this;

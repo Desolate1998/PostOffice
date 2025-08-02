@@ -2,17 +2,15 @@
 
 namespace PostOffice.Middleware;
 
-public class PostageWrapper<TMail, TResponse> : IPostageWrapper
+/// <summary>
+/// Wrapper for typed middleware to handle untyped mail objects
+/// </summary>
+public class PostageWrapper<TMail, TResponse>(IPostageMiddleware<TMail, TResponse> middleware) : IPostageWrapper
     where TMail : IMail<TResponse>
 {
-    private readonly IPostageMiddleware<TMail, TResponse> _middleware;
+    private readonly IPostageMiddleware<TMail, TResponse> _middleware = middleware;
 
-    public PostageWrapper(IPostageMiddleware<TMail, TResponse> middleware)
-    {
-        _middleware = middleware;
-    }
-
-    public async Task<(bool handled, object? result)> Stamp(object mail, Func<object, Task<object>> next)
+  public async Task<(bool handled, object? result)> Stamp(object mail, Func<object, Task<object>> next)
     {
         var (handled, result) = await _middleware.StampAsync(
             (TMail)mail,

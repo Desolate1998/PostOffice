@@ -3,8 +3,14 @@ using PostOffice.Middleware;
 
 namespace PostOffice.Core;
 
+/// <summary>
+/// Main service for sending mail through the PostOffice pipeline
+/// </summary>
 public class Poster(IServiceProvider provider)
 {
+    /// <summary>
+    /// Sends a mail request through the middleware pipeline
+    /// </summary>
     public async Task<TResponse> Send<TResponse>(IMail<TResponse> mail)
     {
         var mailType = mail.GetType();
@@ -15,7 +21,6 @@ public class Poster(IServiceProvider provider)
         var method = handlerType.GetMethod("HandleAsync")
                      ?? throw new InvalidOperationException($"HandleAsync not found on {handlerType.Name}");
 
-        // Create the final handler delegate
         Func<object, Task<TResponse>> finalHandler = async (msg) =>
         {
             var result = method.Invoke(handler, [msg]);
@@ -26,7 +31,6 @@ public class Poster(IServiceProvider provider)
             return (TResponse)resultProperty!.GetValue(task)!;
         };
 
-        // Try to get middleware pipeline, if none registered, call handler directly
         var pipelineType = typeof(IMiddlewarePipeline<,>).MakeGenericType(mailType, responseType);
         var pipeline = provider.GetService(pipelineType);
 

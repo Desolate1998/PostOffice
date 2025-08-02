@@ -7,7 +7,7 @@ namespace PostOffice.Attributes;
 public class ValidateAttribute : Attribute
 {
     /// <summary>
-    /// The order in which this validation should run (lower values run first)
+    /// The order in which this validation should run
     /// </summary>
     public int Order { get; set; } = 0;
 

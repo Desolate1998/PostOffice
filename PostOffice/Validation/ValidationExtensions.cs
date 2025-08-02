@@ -4,11 +4,13 @@ using PostOffice.Middleware;
 
 namespace PostOffice.Validation;
 
+/// <summary>
+/// Validation extensions for PostOffice
+/// </summary>
 public static class ValidationExtensions
 {
     /// <summary>
-    /// Adds validation middleware that automatically validates requests using FluentValidation
-    /// Just add validators to your DI container and they get called automatically
+    /// Adds validation middleware using FluentValidation
     /// </summary>
     public static PostOfficeBuilder AddValidation(this PostOfficeBuilder builder)
     {

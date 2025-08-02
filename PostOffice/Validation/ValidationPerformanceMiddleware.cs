@@ -7,26 +7,18 @@ using PostOffice.Middleware;
 namespace PostOffice.Validation;
 
 /// <summary>
-/// Performance logging middleware specifically for validation
-/// Tracks validation timing and logs detailed validation performance
+/// Performance logging middleware for validation
 /// </summary>
-public class ValidationPerformanceMiddleware<TMail, TResponse> : IPostageMiddleware<TMail, TResponse>
+public class ValidationPerformanceMiddleware<TMail, TResponse>(
+    IServiceProvider serviceProvider,
+    ILogger<ValidationPerformanceMiddleware<TMail, TResponse>> logger) : IPostageMiddleware<TMail, TResponse>
     where TMail : IMail<TResponse>
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<ValidationPerformanceMiddleware<TMail, TResponse>> _logger;
-    private readonly string _mailTypeName;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly ILogger<ValidationPerformanceMiddleware<TMail, TResponse>> _logger = logger;
+    private readonly string _mailTypeName = typeof(TMail).Name;
 
-    public ValidationPerformanceMiddleware(
-        IServiceProvider serviceProvider,
-        ILogger<ValidationPerformanceMiddleware<TMail, TResponse>> logger)
-    {
-        _serviceProvider = serviceProvider;
-        _logger = logger;
-        _mailTypeName = typeof(TMail).Name;
-    }
-
-    public async Task<(bool handled, TResponse? result)> StampAsync(TMail mail, Func<TMail, Task<TResponse>> next)
+  public async Task<(bool handled, TResponse? result)> StampAsync(TMail mail, Func<TMail, Task<TResponse>> next)
     {
         var validators = _serviceProvider.GetServices<IValidator<TMail>>();
         
@@ -44,13 +36,11 @@ public class ValidationPerformanceMiddleware<TMail, TResponse> : IPostageMiddlew
 
         try
         {
-            // Run all validators
             var validationTasks = validators.Select(v => v.ValidateAsync(mail));
             var validationResults = await Task.WhenAll(validationTasks);
             
             validationStopwatch.Stop();
             
-            // Collect all validation failures
             var failures = validationResults
                 .SelectMany(r => r.Errors)
                 .Where(f => f != null)

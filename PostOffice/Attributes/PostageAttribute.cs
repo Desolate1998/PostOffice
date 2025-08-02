@@ -1,14 +1,18 @@
 ﻿namespace PostOffice.Attributes;
 
+/// <summary>
+/// Attribute to mark mail classes with middleware
+/// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class PostageAttribute : Attribute
+public class PostageAttribute(Type middlewareType, int order = 0) : Attribute
 {
-    public Type MiddlewareType { get; }
-    public int Order { get; }
+  /// <summary>
+  /// The middleware type to apply
+  /// </summary>
+  public Type MiddlewareType { get; } = middlewareType;
 
-    public PostageAttribute(Type middlewareType, int order = 0)
-    {
-        MiddlewareType = middlewareType;
-        Order = order;
-    }
+  /// <summary>
+  /// The order in which this middleware should run
+  /// </summary>
+  public int Order { get; } = order;
 }
